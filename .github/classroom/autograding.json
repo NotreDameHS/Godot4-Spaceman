@@ -1,0 +1,54 @@
+{
+  "tests": [
+    {
+      "name": "Test 1",
+      "setup": "",
+      "run": "TEST_MODE=1 ./godot_executable --headless -s autotest.gd",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    },
+    {
+      "name": "Test 2",
+      "setup": "",
+      "run": "TEST_MODE=2 ./godot_executable --headless -s autotest.gd",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    },
+    {
+      "name": "Test 3",
+      "setup": "",
+      "run": "TEST_MODE=3 ./godot_executable --headless -s autotest.gd",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    },
+    {
+      "name": "Test 4",
+      "setup": "",
+      "run": "TEST_MODE=4 ./godot_executable --headless -s autotest.gd",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    },
+    {
+      "name": "Test 5",
+      "setup": "",
+      "run": "TEST_MODE=5 ./godot_executable --headless -s autotest.gd",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+# --- Godot 4 Specifics ---
+# This is the main one for Godot 4. It replaces .import and .mono
+.godot/
+
+# Godot 3 Legacy (Just in case a student uses an old version)
+.import/
+.mono/
+data_*/
+
+# Godot-specific binary/temp files
+*.tmp
+*.uid
+*.lock
+
+# --- macOS Specifics ---
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX
+._*
+
+# --- Windows Specifics ---
+[Tt]humbs.db
+[Tt]humbs.db:encryptable
+desktop.ini
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# --- Linux / Chromebook Specifics ---
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# --- Exported Binaries (The games themselves) ---
+*.exe
+*.zip
+*.tar
+*.gz
+*.7z
+*.apk
+*.ipa
+*.dmg
+*.dmg.blockmap
+*.pkg
+*.app
+*.html
+*.js
+*.wasm
+*.pck

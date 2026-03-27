@@ -1,0 +1,101 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+- workflow_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # --- GODOT SETUP ---
+    - name: Checkout Private Test Script
+      uses: actions/checkout@v4
+      with:
+        repository: McDowell-CSSD/spaceman-autograder 
+        token: ${{ secrets.TEACHER_PAT }}
+        path: teacher_script_folder
+        
+    - name: Move Test Script to Project Root
+      run: mv teacher_script_folder/autotest.gd .
+
+    - name: Download Godot 4.6
+      run: |
+        wget https://github.com/godotengine/godot/releases/download/4.6-stable/Godot_v4.6-stable_linux.x86_64.zip
+        unzip Godot_v4.6-stable_linux.x86_64.zip
+        mv Godot_v4.6-stable_linux.x86_64 godot_executable
+        chmod +x godot_executable
+
+    - name: Import Assets
+      run: ./godot_executable --headless --editor --quit
+    # ------------------------------------------
+
+    # --- GITHUB CLASSROOM TESTS ---
+    - name: 'Test 1: 8-Way Movement'
+      id: test-1-8-way-movement
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Test 1'     # Must always match autograding.json name
+        setup-command: ''
+        command: TEST_MODE=1 ./godot_executable --headless -s autotest.gd
+        timeout: 2
+        max-score: 20
+
+    - name: 'Test 2: Normalization Math'
+      id: test-2-normalization-math
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Test 2'
+        setup-command: ''
+        command: TEST_MODE=2 ./godot_executable --headless -s autotest.gd
+        timeout: 2
+        max-score: 20
+
+    - name: 'Test 3: Fluid Movement (Steering)'
+      id: test-3-fluid-movement-steering
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Test 3'
+        setup-command: ''
+        command: TEST_MODE=3 ./godot_executable --headless -s autotest.gd
+        timeout: 2
+        max-score: 20
+
+    - name: 'Test 4: Speed Boost and Timer'
+      id: test-4-speed-boost-and-timer
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Test 4'
+        setup-command: ''
+        command: TEST_MODE=4 ./godot_executable --headless -s autotest.gd
+        timeout: 2
+        max-score: 20
+
+    - name: 'Test 5: Space Level and Background'
+      id: test-5-space-level-and-background
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: 'Test 5'
+        setup-command: ''
+        command: TEST_MODE=5 ./godot_executable --headless -s autotest.gd
+        timeout: 2
+        max-score: 20
+
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST-1-8-WAY-MOVEMENT_RESULTS: "${{steps.test-1-8-way-movement.outputs.result}}"
+        TEST-2-NORMALIZATION-MATH_RESULTS: "${{steps.test-2-normalization-math.outputs.result}}"
+        TEST-3-FLUID-MOVEMENT-STEERING_RESULTS: "${{steps.test-3-fluid-movement-steering.outputs.result}}"
+        TEST-4-SPEED-BOOST-AND-TIMER_RESULTS: "${{steps.test-4-speed-boost-and-timer.outputs.result}}"
+        TEST-5-SPACE-LEVEL-AND-BACKGROUND_RESULTS: "${{steps.test-5-space-level-and-background.outputs.result}}"
+      with:
+        runners: test-1-8-way-movement,test-2-normalization-math,test-3-fluid-movement-steering,test-4-speed-boost-and-timer,test-5-space-level-and-background
